@@ -85,7 +85,10 @@ th{background:var(--card);font:500 13px 'Oswald';text-transform:uppercase;letter
 .mob{white-space:nowrap}.mob.h{color:var(--mute);letter-spacing:.2em}
 #pcount{color:var(--mute);font-size:14px;margin:0 0 10px}
 .lg{margin-left:auto;background:none;border:1px solid var(--line);color:var(--ink);padding:6px 14px;cursor:pointer;font:500 13px 'IBM Plex Sans';white-space:nowrap}
-.hint{color:var(--mute);font-size:14px}.dm{color:var(--red);font-size:14px;min-height:1.2em;margin:8px 0 0}.ad{display:none}body.admin .ad{display:table-cell}
+.hint{color:var(--mute);font-size:14px}.dm{color:var(--red);font-size:14px;min-height:1.2em;margin:8px 0 0}.ed{outline:1px dashed color-mix(in srgb,var(--amber) 70%,transparent);outline-offset:2px;cursor:text}.ed:focus{outline:2px solid var(--amber);background:color-mix(in srgb,var(--amber) 14%,transparent)}
+#eb{position:fixed;left:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:1500;background:var(--card);border:2px solid var(--amber);padding:10px 14px;display:flex;gap:12px;align-items:center;font-size:13px;max-width:calc(100% - 32px)}#eb[hidden]{display:none}
+#eb button{background:var(--amber);color:#111;border:0;padding:8px 12px;font:600 13px 'IBM Plex Sans';cursor:pointer;white-space:nowrap}
+.ad{display:none}body.admin .ad{display:table-cell}
 .mini{background:none;border:1px solid var(--line);color:var(--ink);padding:1px 8px;cursor:pointer;font:12px 'IBM Plex Sans'}
 #adm[hidden],#msg[hidden]{display:none}
 dialog{background:var(--card);color:var(--ink);border:2px solid var(--amber);padding:24px;max-width:460px;width:calc(100% - 32px)}
@@ -187,7 +190,7 @@ footer{padding:36px 0 48px;color:var(--mute);font-size:14px}
 <p class="lead">Служебные и мобильные телефоны по состоянию на 18.09.2025. Приёмная: 8 (7122) 95-51-32. Найдите сотрудника по фамилии, должности, подразделению или номеру.</p>
 <div class="pf"><input id="q" type="search" placeholder="Поиск: фамилия, должность, номер…"><select id="g"></select><button id="tm">Показать мобильные</button></div>
 <p id="pcount"></p>
-<div id="adm" class="pf" hidden><button id="add">＋ Сотрудник</button><button id="addg">＋ Подразделение</button><button id="jsonw">Файл JSON…</button><button id="savew">Сохранить сайт…</button><button id="chpw" class="alt2">Сменить пароль</button><span id="dirty" hidden style="align-self:center;color:var(--red)">Есть несохранённые изменения</span></div>
+<div id="adm" class="pf" hidden><button id="add">＋ Сотрудник</button><button id="addg">＋ Подразделение</button><button id="jsonw">Файл JSON…</button><button id="savew">Сохранить сайт…</button><button id="rst" class="alt2">Сбросить правки текста</button><button id="chpw" class="alt2">Сменить пароль</button><span id="dirty" hidden style="align-self:center;color:var(--red)">Есть несохранённые изменения</span></div>
 <div class="tw"><table><thead><tr><th>Ф.И.О.</th><th>Должность</th><th>Служебный</th><th>Мобильный</th><th class="ad"></th></tr></thead><tbody id="ph"></tbody></table></div>
 </div></section>
 
@@ -211,6 +214,7 @@ footer{padding:36px 0 48px;color:var(--mute);font-size:14px}
 <label>Подразделение<select id="eg"></select></label><label>Ф.И.О.<input id="ef"></label><label>Должность<input id="er"></label>
 <label>Служебный телефон<input id="ew" placeholder="95-53-77 или 8 (7122) 95-53-77"></label><label>Мобильные (через « ; »)<input id="em" placeholder="8 701 000 00 00; 8 777 000 00 00"></label>
 <div class="pf"><button id="esave">Сохранить</button><button id="ecancel" class="alt2">Отмена</button><button id="edel" class="del">Удалить</button></div></form></dialog>
+<div id="eb" hidden><span>Режим правки: нажмите на любой текст на странице и измените его.</span><button id="ebs">Сохранить сайт…</button></div>
 <div id="msg" hidden role="status"></div>
 <script type="application/json" id="pa">{"l": "admin", "h": "94f2e371640c79ee64ea3ad7eefe7ae812038ac36dcff5a580fe4bf3a9300127"}</script>
 <script type="application/json" id="pd">[["Руководство",[["Ербулеков Серик Кабашевич","Директор","95-51-00","8 771 260 50 11; 8 701 383 91 41"],["Абдрахманов Жанибек Кадыргалиевич","Заместитель директора","95-51-01","8 701 374 06 36; 8 771 260 50 59"],["Омаркулов Бахыт Бакирович","Зам. директора по Мангистаускому региону, начальник СК Мангистау","8 (7292) 46-23-01","8 701 340 43 56; 8 771 260 51 03"],["Мырзагалиева Дарига Жумекеевна","Главный бухгалтер","95-51-83","8 775 802 07 06; 8 771 260 50 39"],["Шунаев Гайни Нурумович","Председатель профсоюза","95-51-04","8 701 338 85 48"],["Дюсембиев Нурлан Шапаевич","Юрисконсульт","95-51-04","8 775 962 17 91"],["Диспетчер филиала","Сменные работники","95-53-78","8 771 260 50 44"]]],["Отдел организации военизированной охраны",[["Бисенов Серик Саудубаевич","Начальник отдела","95-53-74","8 702 316 77 24"],["Жубашев Руслан Гилатович","Специалист 1 кат., инженер","95-53-75","8 776 089 03 89"],["Мухатчиев Айбар Айболатович","Специалист 1 кат., инженер","95-53-75","8 775 629 10 94"],["Баймурзиев Асхат Маратович","Специалист 1 кат., инженер","95-53-75","8 701 403 89 04; 8 771 260 51 04"]]],["Отдел финансов, бухгалтерского и налогового учёта",[["Джанглышева Жанаргуль Тулеушовна","Начальник отдела","95-53-77","8 705 440 06 55; 8 775 802 07 06"],["Ажибаева Дина Харипуллаевна","Специалист 1 кат., бухгалтер","95-53-77","8 702 479 95 44"],["Нурманова Кунсулу Кумаровна","Специалист 1 кат., бухгалтер","95-53-77","8 701 562 34 20"],["Мырзагельдиева Гульжанат Сериккалиевна","Специалист 1 кат., бухгалтер","95-53-77","8 776 090 74 56"],["Татикова Асель Орынбасаровна","Экономист филиала","95-53-77","8 775 221 69 91"]]],["Отдел по работе с персоналом",[["Самаликова Анар Избасаровна","Начальник отдела","95-53-04","8 701 243 04 16; 8 771 260 51 50"],["Исмагулова Айгуль Рабаевна","Специалист 1 категории","95-53-04","8 701 903 29 18"],["Сайфеденова Арайлым Сериковна","Специалист 1 категории","95-53-04","8 702 415 70 89"],["Уалихан Жадыра Уалиханқызы","Специалист 1 категории","95-53-04","8 775 919 34 19"]]],["Приписной штат и СК Атырау (специалисты)",[["Паритова Мира Куанышевна","Специалист 1 кат. по МТО","95-53-05","8 775 880 77 09"],["Аубакирова Индира Абаевна","Специалист 1 кат. по МТО","95-53-05","8 775 802 71 07"],["Рахимгалиев Ерлан Нурланович","Специалист 1 кат. по БиОТ, СК Атырау","95-53-49","8 775 887 80 16; 8 771 260 51 16"],["Джалмагамбетова Гульнар Аиповна","Специалист 1 кат. по БиОТ, СК Атырау","95-53-49","8 701 550 86 48"],["Кушкалиев Беймбет Муратович","Инженер информационных систем, СК Атырау","95-51-32","8 701 151 90 73"]]],["СК на ст. Атырау",[["Мырзагельдиев Сериккали Тыныштыкулы","Начальник стрелковой команды","95-53-76","8 778 663 99 59; 8 771 260 50 42"],["Вакансия","Заместитель начальника СК","95-53-76",""],["Амиров Бекболат Гизатович","Начальник МГОР СК Атырау","","8 701 341 37 90"]]],["СК на ст. Ганюшкино",[["Кайров Калыбай Бигалиевич","Начальник СК","8 (7123) 39-24-72","8 778 510 33 39; 8 771 260 50 60"],["Алипов Шами Сахташевич","Заместитель начальника СК","8 (7123) 39-24-72","8 702 615 42 15"]]],["СК на ст. Макат и СГ Кульсары",[["Даулетов Талгат Жайсанович","Начальник СК","8 (71239) 3-19-55","8 701 419 97 84; 8 771 260 52 19"],["Мукашев Бауыржан Сагынбаевич","Заместитель начальника СК","8 (71239) 3-06-46","8 775 824 78 65"],["Ергалиева Нуржамал Женисовна","Табельщик","","8 701 605 11 71"],["Сейткалиев Кайрат Жумажанович","Начальник СГ на ст. Кульсары","8 (71237) 6-21-18","8 778 934 32 65; 8 771 260 52 07"]]],["СК на ст. Сагиз",[["Нурсултанов Ерик Искендрович","Начальник СК","8 (71238) 7-18-67","8 775 608 67 67"],["Адайбаев Калыбек Сагидоллаевич","Заместитель начальника СК","8 (71238) 7-18-67","8 777 260 51 20; 8 701 663 11 92"]]],["СК на ст. Бейнеу и СГ Сай-Утес",[["Сарсенов Нурбол Таганович","Начальник СК","8 (72932) 6-12-37","8 771 260 50 98"],["Джолдасбаев Асылбек","Заместитель начальника СК","8 (72932) 6-12-37","8 771 838 92 92"],["Кураков Ерлан Майранович","Начальник СГ на ст. Сай-Утес","","8 775 237 58 58"]]],["СК на ст. Мангистау и СГ Узень",[["Жумашев Нурлыбай Жаякбаевич","Заместитель начальника СК","8 (7292) 46-23-01","8 771 260 51 64"],["Жалгасбаев Орынжан Арыстанович","Зам. начальника МГОР СК Мангистау","","8 701 252 51 56"],["Кадырбаев Дима Таласханович","Начальник СГ на ст. Узень","","8 771 260 51 95"]]],["СК Актау-порт",[["Абуов Бактияр Заидинович","Начальник СК","","8 702 755 70 01"],["Омаркулов Марат Бакирович","Заместитель начальника СК","","8 775 381 02 46"]]],["СК Курык-порт",[["Сейтмагамбетов Амантай Отегенович","Начальник СК","","8 776 520 19 73"],["Бащиев Фазылбек Агзамович","Заместитель начальника СК","","8 775 790 14 73"]]]]</script>
@@ -231,7 +235,7 @@ new IntersectionObserver((e,o)=>e.forEach(x=>{if(x.isIntersecting){x.target.quer
 const units=['Все',...new Set(S.map(s=>s[1]))];let cur='Все';
 function draw(){$('filters').innerHTML=units.map(u=>`<button class="${u==cur?'on':''}" data-u="${u}">${u}</button>`).join('');
 $('grid').innerHTML=S.filter(s=>cur=='Все'||s[1]==cur).map(s=>`<div class="card"><span class="cls">${s[2]}</span><h3>${s[0]}</h3><small>СК/СГ ${s[1]}</small><dl><dt>Протяжённость</dt><dd>${String(s[3]).replace('.',',')} км</dd><dt>Станционных путей</dt><dd>${s[4]}</dd><dt>Поездов в сутки</dt><dd>${s[5]}</dd><dt>Охранников на состав</dt><dd>${s[6]}</dd></dl></div>`).join('')}
-$('filters').onclick=e=>{if(e.target.dataset.u){cur=e.target.dataset.u;draw()}};draw();
+$('filters').onclick=e=>{if(e.target.dataset.u){cur=e.target.dataset.u;draw();applyTexts();markEd()}};draw();
 $('people').innerHTML=P.map(p=>`<div class="p ${p[3]?'big':''}"><span class="r">${p[1]}</span><b>${p[0]}</b>${p[2]?`<a href="tel:${p[2].replace(/[^\d+]/g,'')}">${p[2]}</a>`:'<a>телефон — в паспорте филиала</a>'}</div>`).join('');
 $('addr').innerHTML=A.map(a=>`<tr><td><b>${a[0]}</b></td><td>${a[1]}</td></tr>`).join('');
 
@@ -251,7 +255,7 @@ function msg(t){document.querySelectorAll('.dm').forEach(e=>e.textContent=t);con
 $('q').oninput=$('g').onchange=drawP;
 $('tm').onclick=()=>{showM=!showM;$('tm').textContent=showM?'Скрыть мобильные':'Показать мобильные';drawP()};
 // --- администратор ---
-function setAdm(v){adm=v;document.body.classList.toggle('admin',v);$('adm').hidden=!v;$('login').textContent=v?'Выйти из режима':'Вход для администратора';$('tm').hidden=v;fillG($('g').value);drawP()}
+function setAdm(v){adm=v;document.body.classList.toggle('admin',v);$('adm').hidden=!v;$('login').textContent=v?'Выйти из режима':'Вход для администратора';$('tm').hidden=v;$('eb').hidden=!v;fillG($('g').value);drawP();markEd()}
 let CR=JSON.parse($('pa').textContent),bad=0,lock=0;
 const sha=async s=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)))].map(x=>x.toString(16).padStart(2,'0')).join('');
 const openD=id=>{document.querySelectorAll('.dm').forEach(e=>e.textContent='');$(id).showModal()};
@@ -263,7 +267,7 @@ const ok=$('lg').value.trim()==CR.l&&await sha('vjdo:'+$('lg').value.trim()+':'+
 if(ok){bad=0;$('dlgL').close();setAdm(true);msg('Режим администратора включён')}
 else{if(++bad>=3){lock=Date.now()+15000;bad=0}msg('Неверный логин или пароль')}};
 $('jsonw').onclick=()=>openD('dlgJ');
-$('savew').onclick=()=>{const n=D.reduce((s,d)=>s+d[1].length,0);$('ssum').textContent='Подразделений: '+D.length+', записей: '+n+'.';openD('dlgS')};
+$('savew').onclick=()=>{const n=D.reduce((s,d)=>s+d[1].length,0);$('ssum').textContent='Подразделений: '+D.length+', записей: '+n+'. Изменённых текстов: '+Object.keys(TX).length+'.';openD('dlgS')};
 $('ph').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i,k=+b.dataset.k,a=b.dataset.a;
 if(a=='e')openEd(i,k);
 if(a=='rg'){const n=prompt('Название подразделения',D[i][0]);if(n){D[i][0]=n.trim();chg()}}
@@ -290,11 +294,25 @@ let sha;const g=await fetch(u,{headers:H});if(g.ok)sha=(await g.json()).sha;else
 const r=await fetch(u,{method:'PUT',headers:H,body:JSON.stringify({message:'Обновление '+path+' из админ-панели',content:btoa(unescape(encodeURIComponent(JSON.stringify(obj,null,1)))),sha})});
 if(!r.ok)throw new Error(r.status==403||r.status==404?'Нет права записи (нужен Contents: Read and write) или неверный репозиторий':'Ошибка сохранения '+r.status)}
 $('save').onclick=async()=>{const tk=$('tok').value.trim();if(!tk){msg('Вставьте токен GitHub');return}
-msg('Сохраняю…');try{await gput('data.json',D,tk);if(PWCH)await gput('auth.json',CR,tk);PWCH=false;$('dirty').hidden=true;msg('Сохранено. Сайт обновится через 30–90 секунд.')}catch(x){msg(x.message||'Не удалось сохранить')}};
+msg('Сохраняю…');try{await gput('data.json',D,tk);await gput('texts.json',TX,tk);if(PWCH)await gput('auth.json',CR,tk);PWCH=false;$('dirty').hidden=true;msg('Сохранено. Сайт обновится через 30–90 секунд.')}catch(x){msg(x.message||'Не удалось сохранить')}};
 $('chpw').onclick=async()=>{const p=prompt('Новый пароль (не короче 8 символов)');if(!p)return;if(p.length<8){msg('Пароль слишком короткий');return}
 CR.h=await sha('vjdo:'+CR.l+':'+p);PWCH=true;$('dirty').hidden=false;msg('Пароль изменён. Нажмите «Сохранить сайт…».')};
 fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(Array.isArray(j)&&j.every(g=>typeof g[0]=='string'&&Array.isArray(g[1]))){D=j;fillG('');drawP()}}).catch(()=>{});
 fetch('auth.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.l&&j.h)CR=j}).catch(()=>{});
+// --- правка любого текста ---
+let TX={};
+const EX='#ph,#adm,#eb,dialog,#msg,#login,#pcount,.pf,thead,script,style,select,option,input,textarea,button,.leaflet-container';
+const clean=s=>String(s).replace(/<(?!br\s*\/?>)[^>]*>/gi,'').replace(/&nbsp;/g,' ').trim();
+const cands=()=>[...document.body.querySelectorAll('*')].filter(e=>!e.closest(EX)&&e.childNodes.length&&[...e.childNodes].every(n=>n.nodeType==3||n.nodeName=='BR')&&e.textContent.trim());
+function applyTexts(){cands().forEach(e=>{if(e._b===undefined)e._b=e.innerHTML.trim();const v=TX[e._b];if(v!==undefined&&e.innerHTML.trim()!==clean(v))e.innerHTML=clean(v)})}
+function markEd(){cands().forEach(e=>{e.contentEditable=adm;e.classList.toggle('ed',adm)});if(!adm)document.querySelectorAll('.ed[contenteditable]').forEach(e=>{e.removeAttribute('contenteditable');e.classList.remove('ed')})}
+document.addEventListener('input',ev=>{const e=ev.target.closest&&ev.target.closest('.ed');if(!e||!adm)return;const v=clean(e.innerHTML);if(v==e._b)delete TX[e._b];else TX[e._b]=v;$('dirty').hidden=false});
+document.addEventListener('click',ev=>{if(adm&&ev.target.closest('.ed'))ev.preventDefault()},true);
+document.addEventListener('paste',ev=>{if(adm&&ev.target.closest&&ev.target.closest('.ed')){ev.preventDefault();document.execCommand('insertText',false,(ev.clipboardData||window.clipboardData).getData('text/plain'))}});
+$('rst').onclick=()=>{if(!confirm('Вернуть все тексты сайта к исходным?'))return;TX={};cands().forEach(e=>{if(e._b!==undefined)e.innerHTML=e._b});$('dirty').hidden=false;msg('Тексты сброшены. Нажмите «Сохранить сайт…».')};
+$('ebs').onclick=()=>$('savew').click();
+applyTexts();
+fetch('texts.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&typeof j=='object'&&!Array.isArray(j)){TX=j;applyTexts()}}).catch(()=>{});
 fillG('');drawP();
 
 (function(){
