@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Карта объектов — Атырауский филиал ТОО «ВЖДО»</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0e1420;--bg2:#151d2c;--card:#1a2436;--ink:#eef1f6;--mute:#9aa7bd;--line:#2a3750;--amber:#ffc21a;--red:#e5372f;--green:#2fbf71;--blue:#4aa3ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f1ea;--bg2:#e9e5db;--card:#fff;--ink:#131a28;--mute:#55627a;--line:#cfc9ba;--amber:#c98a00;--red:#c4271f;--green:#1c8a52;--blue:#1d6fc4}}
+:root[data-theme="light"]{--bg:#f4f1ea;--bg2:#e9e5db;--card:#fff;--ink:#131a28;--mute:#55627a;--line:#cfc9ba;--amber:#c98a00;--red:#c4271f;--green:#1c8a52;--blue:#1d6fc4}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 'IBM Plex Sans',system-ui,sans-serif}
+h1,h2,h3{font-family:'Oswald','Arial Narrow',sans-serif;text-transform:uppercase;letter-spacing:.02em;margin:0}
+.hazard{height:14px;background:repeating-linear-gradient(-45deg,var(--amber) 0 18px,#111 18px 36px)}
+header{border-bottom:1px solid var(--line)}
+header .in{max-width:1240px;margin:0 auto;padding:16px 20px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+header a{color:var(--amber);text-decoration:none;font-weight:600}
+h1{font-size:clamp(24px,4vw,38px)}
+.wrap{max-width:1240px;margin:0 auto;padding:20px}
+.lay{display:grid;grid-template-columns:320px 1fr;gap:16px}
+#map{height:640px;border:1px solid var(--line);background:var(--bg2)}
+.list{max-height:640px;overflow:auto;border:1px solid var(--line);background:var(--card)}
+.list button{display:flex;gap:10px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);color:var(--ink);padding:10px 14px;cursor:pointer;font:14px 'IBM Plex Sans'}
+.list button:hover{background:var(--bg2)}
+.dot{flex:none;width:14px;height:14px;border-radius:50%;border:2px solid #fff}
+.leg{display:flex;gap:16px;flex-wrap:wrap;margin:14px 0;font-size:14px;color:var(--mute)}
+.leg span{display:inline-flex;gap:6px;align-items:center}
+h2{font-size:26px;margin:34px 0 12px;color:var(--amber)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:var(--card);border:1px solid var(--line);padding:16px}
+select{background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:10px;font:16px 'IBM Plex Sans';min-width:180px}
+#res{font:700 22px 'Oswald';color:var(--amber)}
+.tw{overflow-x:auto;border:1px solid var(--line)}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th,td{padding:9px 14px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--card);font:500 13px 'Oswald';text-transform:uppercase;color:var(--amber);letter-spacing:.06em}
+td.n{text-align:right;font-weight:600}
+.note{color:var(--mute);font-size:14px;margin-top:10px}
+.pin{width:22px;height:22px;border-radius:50%;border:3px solid #fff;box-shadow:0 1px 6px rgba(0,0,0,.6)}
+.lbl{background:var(--card);color:var(--ink);border:1px solid var(--line);font:600 12px 'IBM Plex Sans';padding:1px 6px;white-space:nowrap;transform:translate(-50%,-50%)}
+.leaflet-popup-content{font:14px/1.5 'IBM Plex Sans',sans-serif;margin:12px 14px;color:#131a28}
+.leaflet-popup-content b{font-size:16px}.leaflet-popup-content a{color:#0a58c4}
+@media(max-width:820px){.lay{grid-template-columns:1fr}#map{height:480px;order:-1}.list{max-height:280px}}
+</style></head><body>
+<div class="hazard"></div>
+<header><div class="in"><a href="index.html">← На главную</a><h1>Карта объектов</h1></div></header>
+<div class="wrap">
+<div class="leg" id="leg"></div>
+<div class="lay"><div class="list" id="list"></div><div id="map"></div></div>
+
+<h2>Расстояние между станциями</h2>
+<div class="tools"><select id="a"></select><span>→</span><select id="b"></select><span id="res">—</span></div>
+<p class="note">Расстояния указаны по прямой между координатами объектов. Железнодорожный километраж по путям будет больше. Для официальных данных используйте ведомости перегонов.</p>
+<div class="tw" style="margin-top:14px"><table><thead><tr><th>Участок</th><th style="text-align:right">По прямой, км</th></tr></thead><tbody id="seg"></tbody></table></div>
+</div>
+<div class="hazard"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+// тип: hq штаб, sk стрелковая команда, sg стрелковая группа, br мост, pt порт
+const T={hq:['Штаб','#2fbf71'],sk:['Стрелковая команда','#ffc21a'],sg:['Стрелковая группа','#4aa3ff'],br:['Мост','#b57bff'],pt:['Порт','#e5372f']};
+const O=[
+["hq","Штаб филиала","hq","г. Атырау, мкр. Береке, проезд 1, д. 2",47.131291,51.958927],
+["atyrau","СК Атырау","sk","г. Атырау, мкр. Береке, проезд 1, д. 2",47.131225,51.958983],
+["makat","СК Макат","sk","Атырауская обл., Макатский р-н, ст. Макат, мкр. Алаш 101",47.644533,53.346870],
+["sagiz","СК Сагиз","sk","Атырауская обл., Кызылкогинский р-н, ст. Сагиз, ул. Бейбарыс, д. 2",48.235548,54.883484],
+["ganyush","СК Ганюшкино","sk","Атырауская обл., Курмангазинский р-н, п. Акколь, ул. Иманова, д. 7",46.660171,49.044428],
+["kulsary","СГ Кульсары","sg","Атырауская обл., Жылойский р-н, ст. Кульсары, ул. Қожа Ахмет Иассауи, 29а",46.939809,53.944848],
+["beyneu","СК Бейнеу","sk","Мангистауская обл., ст. Бейнеу, ул. Акшабайулы, 9",45.319185,55.196709],
+["mangistau","СК Мангистау (Мангышлак)","sk","Мангистауская обл., Мунайлинский р-н, с. Мангистау, 19 кв-л, 4/6",43.698625,51.306779],
+["uzen","СГ Узень","sg","Мангистауская обл., Каракиянский р-н, г. Жанаозен",43.321350,52.854841],
+["bolashak","СГ Болашак","sg","Мангистауская обл., Каракиянский р-н, ст. Болашак",42.329139,53.680477],
+["saiutes","СГ Сай-Утес","sg","Мангистауская обл., Бейнеуский р-н, ст. Сай-Утес, ул. Привокзальная",44.330118,53.532526],
+["ural","СК мост через р. Урал","br","ж/д мост, 323 км, ПК 9+48, перегон ст. Атырау — ст. Махамбет",47.143640,51.932008],
+["sokolok","СК мост через р. Соколок","br","ж/д мост, 499 км, ПК 9+83, участок Атырау — Макат",47.189688,52.125671],
+["kuryk","Порт Курык","pt","Мангистауская обл., Каракиянский р-н, с. Курык, участок Сарша, строение 636. По паспорту 110 км от СК на ст. Мангистау",43.164699,51.441781],
+["aktau","Порт Актау","pt","Мангистауская обл., г. Актау, промзона, Морской торговый порт №1",43.602605,51.220818]];
+// участки железной дороги
+const E=[["ganyush","atyrau"],["atyrau","makat"],["makat","sagiz"],["makat","kulsary"],["kulsary","beyneu"],["beyneu","saiutes"],["saiutes","mangistau"],["mangistau","uzen"],["uzen","bolashak"],["mangistau","aktau"],["mangistau","kuryk"]];
+const M={};O.forEach(o=>M[o[0]]=o);
+const km=(p,q)=>{const r=Math.PI/180,dl=(q[5]-p[5])*r,a=Math.sin((q[4]-p[4])*r/2)**2+Math.cos(p[4]*r)*Math.cos(q[4]*r)*Math.sin(dl/2)**2;return 12742*Math.asin(Math.sqrt(a))};
+const f=x=>x.toFixed(1).replace('.',',');
+const $=id=>document.getElementById(id);
+const map=L.map('map',{scrollWheelZoom:true}).fitBounds([[42.2,49],[48.4,55.4]]);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:18,attribution:'© участники OpenStreetMap'}).addTo(map);
+const mk={};
+O.forEach(o=>{const c=T[o[2]][1];
+const m=L.marker([o[4],o[5]],{icon:L.divIcon({className:'',html:`<div class="pin" style="background:${c}"></div>`,iconSize:[22,22],iconAnchor:[11,11]}),title:o[1]}).addTo(map);
+const g=`https://www.google.com/maps?q=${o[4]},${o[5]}`,r=`https://www.google.com/maps/dir/?api=1&destination=${o[4]},${o[5]}`;
+m.bindPopup(`<b>${o[1]}</b><br>${T[o[2]][0]}<br>${o[3]}<br><small>${o[4].toFixed(6)}, ${o[5].toFixed(6)}</small><br><a target="_blank" rel="noopener" href="${g}">Открыть в Google Картах</a> · <a target="_blank" rel="noopener" href="${r}">Маршрут</a>`);mk[o[0]]=m});
+E.forEach(([a,b])=>{const p=M[a],q=M[b],d=km(p,q);
+L.polyline([[p[4],p[5]],[q[4],q[5]]],{color:'#ffc21a',weight:4,dashArray:'10 6'}).addTo(map);
+L.marker([(p[4]+q[4])/2,(p[5]+q[5])/2],{interactive:false,icon:L.divIcon({className:'',html:`<div class="lbl">${f(d)} км</div>`,iconSize:[0,0]})}).addTo(map)});
+$('leg').innerHTML=Object.values(T).map(t=>`<span><i class="dot" style="background:${t[1]}"></i>${t[0]}</span>`).join('')+'<span>Жёлтые линии — участки между станциями</span>';
+$('list').innerHTML=O.map(o=>`<button data-i="${o[0]}"><i class="dot" style="background:${T[o[2]][1]}"></i><span><b>${o[1]}</b><br><small style="color:var(--mute)">${o[4].toFixed(5)}, ${o[5].toFixed(5)}</small></span></button>`).join('');
+$('list').onclick=e=>{const b=e.target.closest('button');if(!b)return;const o=M[b.dataset.i];map.flyTo([o[4],o[5]],14);mk[o[0]].openPopup()};
+$('seg').innerHTML=E.map(([a,b])=>`<tr><td>${M[a][1]} — ${M[b][1]}</td><td class="n">${f(km(M[a],M[b]))}</td></tr>`).join('');
+// расчёт по цепочке участков
+const st=O.filter(o=>['sk','sg','pt'].includes(o[2]));
+const opt=st.map(o=>`<option value="${o[0]}">${o[1]}</option>`).join('');$('a').innerHTML=opt;$('b').innerHTML=opt;$('b').value='mangistau';
+const adj={};E.forEach(([a,b])=>{const d=km(M[a],M[b]);(adj[a]=adj[a]||[]).push([b,d]);(adj[b]=adj[b]||[]).push([a,d])});
+function path(a,b){const q=[[a,0,[a]]],s=new Set([a]);while(q.length){const [n,d,p]=q.shift();if(n==b)return[d,p];(adj[n]||[]).forEach(([m,w])=>{if(!s.has(m)){s.add(m);q.push([m,d+w,[...p,m]])}})}return null}
+function calc(){const r=path($('a').value,$('b').value);$('res').textContent=r?(r[0]?f(r[0])+' км по прямой через '+(r[1].length-1)+' уч.':'0 км'):'нет прямого участка'}
+$('a').onchange=$('b').onchange=calc;calc();
+</script></body></html>

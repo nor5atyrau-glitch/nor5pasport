@@ -95,8 +95,22 @@ dialog .pf{margin:18px 0 0}dialog .pf button{min-width:0;flex:1}.alt2{background
 #msg{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:12px 20px;z-index:20;max-width:90%;font-size:14px}
 footer{padding:36px 0 48px;color:var(--mute);font-size:14px}
 @media(max-width:760px){.split,.ports{grid-template-columns:1fr}.bar{grid-template-columns:110px 1fr 46px}section{padding:52px 0}}
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+.mapbox{display:grid;grid-template-columns:320px 1fr;border:1px solid var(--line);background:var(--card)}
+#map{height:620px;min-height:420px;background:var(--bg2);z-index:1}
+.ml{max-height:620px;overflow-y:auto;border-right:1px solid var(--line)}
+.ml button{display:flex;gap:10px;align-items:flex-start;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);color:var(--ink);padding:11px 14px;cursor:pointer;font:14px/1.35 'IBM Plex Sans'}
+.ml button:hover{background:var(--bg2)}.ml small{display:block;color:var(--mute);font-size:12px}
+.dot{flex:none;width:14px;height:14px;border-radius:50%;margin-top:3px;border:2px solid #fff;box-shadow:0 0 0 1px #0006}
+.mk{width:22px;height:22px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 6px #0009}
+.leaflet-popup-content{font:14px/1.45 'IBM Plex Sans',sans-serif;color:#111}.leaflet-popup-content a{color:#0a58ca}
+.mleg{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--mute)}.mleg i{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px}
+@media(max-width:860px){.mapbox{grid-template-columns:1fr}.ml{max-height:220px;border-right:0;border-bottom:1px solid var(--line)}#map{height:460px}}
 </style></head><body>
-<nav><div class="wrap"><b>ВЖДО · АТЫРАУ</b><a href="#about">О филиале</a><a href="#route">Маршрут</a><a href="#staff">Численность</a><a href="#stations">Станции</a><a href="#ports">Порты</a><a href="#lead">Руководство</a><a href="#phones">Телефоны</a><a href="#contacts">Адреса</a><button id="login" class="lg">Вход для администратора</button></div></nav>
+<nav><div class="wrap"><b>ВЖДО · АТЫРАУ</b><a href="#about">О филиале</a><a href="#route">Маршрут</a><a href="#staff">Численность</a><a href="#stations">Станции</a><a href="#map">Карта</a><a href="#ports">Порты</a><a href="#lead">Руководство</a><a href="#phones">Телефоны</a><a href="map.html">Карта объектов</a><a href="#contacts">Адреса</a><button id="login" class="lg">Вход для администратора</button></div></nav>
 
 <header class="hero"><div class="wrap">
 <span class="tag">Паспорт филиала · 2025</span>
@@ -144,6 +158,13 @@ footer{padding:36px 0 48px;color:var(--mute);font-size:14px}
 <div><b>Мост через р. Соколок</b>499 км, ПК 9+83, участок Атырау — Макат.</div>
 <div><b>МГОР</b>Мобильные группы оперативного реагирования в Атырау и Мангистау.</div>
 </div></div></section>
+
+<section id="map"><div class="wrap">
+<div class="sec-h"><span class="sig"></span><h2>Карта объектов</h2></div>
+<p class="lead">Атырауская и Мангистауская области: 15 объектов охраны с точными координатами. Нажмите на объект в списке или на метку, чтобы увидеть адрес и открыть точку в Google Картах.</p>
+<div class="mapbox"><div class="ml" id="ml"></div><div id="map"></div></div>
+<div class="mleg" id="mleg"></div>
+</div></section>
 
 <section id="ports"><div class="wrap">
 <div class="sec-h"><span class="sig" style="background:var(--red);box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 25%,transparent)"></span><h2>Морские порты</h2></div>
@@ -275,4 +296,37 @@ CR.h=await sha('vjdo:'+CR.l+':'+p);PWCH=true;$('dirty').hidden=false;msg('Пар
 fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(Array.isArray(j)&&j.every(g=>typeof g[0]=='string'&&Array.isArray(g[1]))){D=j;fillG('');drawP()}}).catch(()=>{});
 fetch('auth.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.l&&j.h)CR=j}).catch(()=>{});
 fillG('');drawP();
+
+(function(){
+const T={hq:['Штаб / СК','#ffc21a'],sk:['Стрелковая команда','#2f7de1'],sg:['Стрелковая группа','#2fbf71'],br:['Мост','#a45bd6'],pt:['Порт','#e5372f']};
+const O=[
+["Штаб филиала","hq","г. Атырау, мкр. Береке, проезд 1, д. 2",47.131291,51.958927],
+["СК Макат","sk","Атырауская обл., Макатский р-н, ст. Макат, мкр. Алаш-101",47.644533,53.346870],
+["СК Сагиз","sk","Атырауская обл., Кызылкогинский р-н, ст. Сагиз, ул. Бейбарыс, д. 2",48.235548,54.883484],
+["СК Ганюшкино","sk","Атырауская обл., Курмангазинский р-н, п. Акколь, ул. Иманова, д. 7",46.660171,49.044428],
+["СГ Кульсары","sg","Атырауская обл., Жылойский р-н, ст. Кульсары, ул. Қожа Ахмет Иассауи, 29а",46.939809,53.944848],
+["СК Бейнеу","sk","Мангистауская обл., ст. Бейнеу, ул. Акшабайулы, 9",45.319185,55.196709],
+["СК Мангистау (Мангышлак)","sk","Мангистауская обл., Мунайлинский р-н, с. Мангистау, 19 кв-л, 4/6",43.698625,51.306779],
+["СК Атырау","hq","г. Атырау, мкр. Береке, проезд 1, д. 2",47.131225,51.958983],
+["СГ Узень","sg","Мангистауская обл., Каракиянский р-н, г. Жанаозен",43.321350,52.854841],
+["СГ Болашак","sg","Мангистауская обл., Каракиянский р-н, ст. Болашак",42.329139,53.680477],
+["СГ Сай-Утес","sg","Мангистауская обл., ст. Сай-Утес, ул. Привокзальная",44.330118,53.532526],
+["Мост через р. Урал","br","Ж/д мост, 323 км, ПК 9+48, перегон Атырау — Махамбет",47.143640,51.932008],
+["Мост через р. Соколок","br","Ж/д мост, 499 км, ПК 9+83, участок Атырау — Макат",47.189688,52.125671],
+["Порт Курык","pt","Мангистауская обл., Каракиянский р-н, с. Курык, уч. Сарша, строение 636",43.164699,51.441781],
+["Актау-порт","pt","Мангистауская обл., г. Актау, промзона, Морской торговый порт №1",43.602605,51.220818]];
+const el=document.getElementById('map');
+document.getElementById('mleg').innerHTML=Object.values(T).map(t=>`<span><i style="background:${t[1]}"></i>${t[0]}</span>`).join('');
+document.getElementById('ml').innerHTML=O.map((o,i)=>`<button data-i="${i}"><span class="dot" style="background:${T[o[1]][1]}"></span><span><b>${o[0]}</b><small>${o[3].toFixed(6)}, ${o[4].toFixed(6)}</small></span></button>`).join('');
+if(typeof L==='undefined'){el.innerHTML='<p style="padding:24px">Карта не загрузилась. Список объектов слева содержит координаты.</p>';return}
+const osm=L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'});
+const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:18,attribution:'Esri, Maxar, Earthstar Geographics'});
+const map=L.map(el,{layers:[osm],scrollWheelZoom:false});
+L.control.layers({'Схема':osm,'Спутник':sat}).addTo(map);
+map.on('click',()=>map.scrollWheelZoom.enable());
+const M=O.map(o=>{const m=L.marker([o[3],o[4]],{title:o[0],icon:L.divIcon({className:'',html:`<div class="mk" style="background:${T[o[1]][1]}"></div>`,iconSize:[22,22],iconAnchor:[11,11],popupAnchor:[0,-11]})}).addTo(map);
+m.bindPopup(`<b>${o[0]}</b><br>${o[2]}<br><small>${o[3].toFixed(6)}, ${o[4].toFixed(6)}</small><br><a target="_blank" rel="noopener" href="https://www.google.com/maps?q=${o[3]},${o[4]}">Открыть в Google Картах</a>`);return m});
+map.fitBounds(L.latLngBounds(O.map(o=>[o[3],o[4]])).pad(.12));
+document.getElementById('ml').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=+b.dataset.i;map.flyTo([O[i][3],O[i][4]],13);M[i].openPopup();document.getElementById('map').scrollIntoView({block:'center',behavior:'smooth'})};
+})();
 </script></body></html>
