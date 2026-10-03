@@ -178,8 +178,65 @@ nav a.act{color:var(--ink)}nav a.act::after{content:"";position:absolute;left:0;
 }
 @media (prefers-reduced-motion:reduce){.rv{opacity:1}.tr{display:none}}
 </style>
+<style id="clkcss">
+#clk{position:relative;z-index:50;background:linear-gradient(90deg,#090e19,#12203a 60%,#0d1627);color:#eef1f6;border-bottom:1px solid rgba(255,194,26,.4);font:500 14px 'IBM Plex Sans',sans-serif}
+#clk .cb{display:flex;align-items:center;gap:14px;height:48px;position:relative}
+#clk .ct{display:flex;align-items:baseline;gap:12px;min-width:0}
+#cdig{font:700 24px/1 'Oswald',sans-serif;letter-spacing:.07em;color:#ffc21a;text-shadow:0 0 14px rgba(255,194,26,.45);font-variant-numeric:tabular-nums}
+#cdate{color:#b9c4d8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctz{margin-left:auto;color:#7e8ba3;font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+#ccal{display:inline-flex;align-items:center;gap:8px;background:rgba(255,194,26,.12);color:#ffc21a;border:1px solid rgba(255,194,26,.5);padding:7px 14px;cursor:pointer;font:600 13px 'IBM Plex Sans';transition:background .25s,color .25s}
+#ccal:hover,#ccal[aria-expanded="true"]{background:#ffc21a;color:#111}
+#cpan{position:absolute;right:20px;top:calc(100% + 1px);width:min(340px,calc(100vw - 24px));background:#101a2c;border:1px solid #2a3750;border-top:3px solid #ffc21a;box-shadow:0 26px 60px rgba(0,0,0,.55);padding:18px 18px 16px;opacity:0;pointer-events:none;visibility:hidden;transform:translateY(-10px) scale(.97);transform-origin:top right;transition:opacity .25s,transform .25s,visibility .25s}
+#cpan.open{opacity:1;pointer-events:auto;visibility:visible;transform:none}
+.cbig{display:flex;justify-content:center}
+.cdg{text-align:center;font:700 34px 'Oswald';letter-spacing:.08em;color:#ffc21a;margin:6px 0 12px;font-variant-numeric:tabular-nums}
+.chd{display:flex;align-items:center;justify-content:space-between;border-top:1px solid #2a3750;padding-top:12px}
+.chd b{font:700 19px 'Oswald';text-transform:uppercase;letter-spacing:.05em}
+.chd button{width:34px;height:34px;background:none;border:1px solid #2a3750;color:#eef1f6;font-size:20px;cursor:pointer;transition:background .2s,border-color .2s}
+.chd button:hover{border-color:#ffc21a;background:rgba(255,194,26,.14)}
+.cw,.cg{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.cw{margin:10px 0 4px}.cw i{font-style:normal;font-size:11px;color:#7e8ba3;text-transform:uppercase;letter-spacing:.08em}
+.cw i.we,.cg span.we{color:#ff746b}
+.cg span{display:flex;align-items:center;justify-content:center;aspect-ratio:1;font-size:14px;border-radius:50%;transition:background .2s}
+.cg span:hover{background:rgba(255,255,255,.08)}
+.cg span.o{opacity:.3}
+.cg span.td{background:#ffc21a;color:#111;font-weight:700;box-shadow:0 0 0 3px rgba(255,194,26,.25),0 0 18px rgba(255,194,26,.5)}
+#ctod{display:block;margin:12px auto 0;background:none;border:0;color:#ffc21a;cursor:pointer;font:600 13px 'IBM Plex Sans';text-decoration:underline;text-underline-offset:3px}
+.cmini{width:30px;height:30px;flex:none}
+@media(max-width:640px){.ctz,#ccal span{display:none}#ccal{padding:8px 10px;margin-left:auto}#cdig{font-size:20px}#cdate{font-size:13px}#clk .ct{flex-wrap:wrap;gap:0 10px}}
+</style>
+<style id="schcss">
+.sch{grid-template-columns:1fr!important}.schf{max-width:760px}
+.stabs{display:flex;gap:8px;padding:0 18px 12px}
+.stabs button{background:none;color:var(--ink);border:1px solid var(--line);padding:9px 20px;cursor:pointer;font:600 14px 'IBM Plex Sans',sans-serif;transition:.25s}
+.stabs button:hover{border-color:var(--amber)}.stabs button.on{background:var(--amber);color:#111;border-color:var(--amber)}
+.schf iframe{height:351px!important}.schf iframe[hidden]{display:none}
+
+.sch{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:28px;align-items:start}
+.schf{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--amber)}
+.schf h3{font-size:18px;padding:14px 18px 0;color:var(--amber)}.schf small{display:block;padding:2px 18px 10px;color:var(--mute);font-size:13px}
+.schf iframe{display:block;width:100%;height:620px;border:0;background:#fff}
+.schl{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.schl a{display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);padding:18px;transition:transform .3s,border-color .3s}
+.schl a:hover{transform:translateY(-4px);border-color:var(--amber)}
+.schl b{display:block;font:700 20px 'Oswald',sans-serif;text-transform:uppercase;margin-bottom:4px}.schl span{color:var(--mute);font-size:14px}
+.schsrc{color:var(--mute);font-size:13px;margin-top:16px}.schsrc a{color:var(--amber)}
+@media(max-width:820px){.sch{grid-template-columns:1fr}}
+</style>
 </head><body>
-<nav><div class="wrap"><b>ВЖДО · АТЫРАУ</b><a href="#about">О филиале</a><a href="#uniform">Форма</a><a href="#route">Маршрут</a><a href="#staff">Численность</a><a href="#stations">Станции</a><a href="#ports">Порты</a><a href="#lead">Руководство</a><a href="#phones">Телефоны</a><a href="map.html">Карта объектов</a><a href="#contacts">Адреса</a><button id="login" class="lg">Вход для администратора</button></div></nav>
+<div id="clk"><div class="wrap cb">
+<div class="cmini" id="cmini"></div>
+<div class="ct"><b id="cdig">--:--:--</b><span id="cdate">…</span></div>
+<span class="ctz">Атырау · UTC+5</span>
+<button id="ccal" aria-expanded="false" aria-controls="cpan"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span>Календарь</span></button>
+<div id="cpan"><div class="cbig" id="cbig"></div><div class="cdg" id="cdg2"></div>
+<div class="chd"><button id="cprev" aria-label="Предыдущий месяц">‹</button><b id="cmon"></b><button id="cnext" aria-label="Следующий месяц">›</button></div>
+<div class="cw"><i>Пн</i><i>Вт</i><i>Ср</i><i>Чт</i><i>Пт</i><i class="we">Сб</i><i class="we">Вс</i></div>
+<div class="cg" id="cgrid"></div><button id="ctod">Сегодня</button></div>
+</div></div>
+
+<nav><div class="wrap"><b>ВЖДО · АТЫРАУ</b><a href="#about">О филиале</a><a href="#uniform">Форма</a><a href="#route">Маршрут</a><a href="#staff">Численность</a><a href="#stations">Станции</a><a href="#schedule">Расписание</a><a href="#ports">Порты</a><a href="#lead">Руководство</a><a href="#phones">Телефоны</a><a href="map.html">Карта объектов</a><a href="#contacts">Адреса</a><button id="login" class="lg">Вход для администратора</button></div></nav>
 
 <header class="hero">
 <div class="wrap">
@@ -260,6 +317,20 @@ nav a.act{color:var(--ink)}nav a.act::after{content:"";position:absolute;left:0;
 
 
 
+<section id="schedule" class="alt"><div class="wrap">
+<div class="sec-h"><span class="sig"></span><h2>Расписание поездов и самолётов</h2></div>
+<p class="lead">Актуальные рейсы по Атырау: время указано местное, данные обновляются автоматически.</p>
+<div class="sch"><div class="schf"><h3>Ближайшие рейсы из Атырау</h3><small>Яндекс Расписания · время Атырау</small>
+<div class="stabs"><button class="on" data-t="train">🚆 Поезда</button><button data-t="plane">✈ Самолёты</button></div>
+<iframe id="schf" title="Расписание поездов" loading="lazy" src="https://rasp.yandex.kz/informers/v2/search/?fromId=c10291&toId=c163&size=5&color=1&type=train"></iframe>
+<iframe id="fplane" title="Расписание самолётов" loading="lazy" data-src="https://rasp.yandex.kz/informers/v2/search/?fromId=c10291&toId=c163&size=5&color=1&type=plane" hidden></iframe></div>
+<div><div class="schl">
+<a href="https://rasp.yandex.kz/station/9619367/" target="_blank" rel="noopener"><b>Вокзал Атырау</b><span>Полное табло отправления и прибытия поездов</span></a>
+<a href="https://rasp.yandex.kz/train/atyrau--astana" target="_blank" rel="noopener"><b>Атырау — Астана</b><span>Расписание, дни движения и время в пути</span></a>
+<a href="https://rasp.yandex.kz/train/almaty--atyrau" target="_blank" rel="noopener"><b>Алматы — Атырау</b><span>Поезда на ближайшие даты</span></a>
+<a href="https://rasp.yandex.kz/train/atyrau--aktau" target="_blank" rel="noopener"><b>Атырау — Актау</b><span>Поезд до станции Мангистау</span></a>
+</div><p class="schsrc">Источник данных: <a href="https://rasp.yandex.kz/" target="_blank" rel="noopener">Яндекс Расписания</a>. Перед поездкой уточняйте рейс у перевозчика.</p></div></div>
+</div></section>
 <section id="ports"><div class="wrap">
 <div class="sec-h"><span class="sig" style="background:var(--red);box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 25%,transparent)"></span><h2>Морские порты и контейнерный хаб</h2></div>
 <p class="lead">Охрана имущества, персонала и посетителей, пропускной режим, порядок ввоза и вывоза, пресечение правонарушений — по договорам с заказчиками.</p>
@@ -283,7 +354,7 @@ nav a.act{color:var(--ink)}nav a.act::after{content:"";position:absolute;left:0;
 <p class="lead">Служебные и мобильные телефоны по данным паспорта филиала 2026. Приёмная: 8 (7122) 95-51-32. Найдите сотрудника по фамилии, должности, подразделению или номеру.</p>
 <div class="pf"><input id="q" type="search" placeholder="Поиск: фамилия, должность, номер…"><select id="g"></select><button id="tm">Показать мобильные</button></div>
 <p id="pcount"></p>
-<div id="adm" class="pf" hidden><button id="add">＋ Сотрудник</button><button id="addg">＋ Подразделение</button><button id="jsonw">Файл JSON…</button><button id="savew">Сохранить сайт…</button><button id="rst" class="alt2">Сбросить правки текста</button><button id="chpw" class="alt2">Сменить пароль</button><span id="dirty" hidden style="align-self:center;color:var(--red)">Есть несохранённые изменения</span></div>
+<div id="adm" class="pf" hidden><button id="add">＋ Сотрудник</button><button id="addg">＋ Подразделение</button><button id="jsonw">Файл JSON…</button><button id="savew">Сохранить сайт…</button><button id="schb" class="alt2">Расписание…</button><button id="rst" class="alt2">Сбросить правки текста</button><button id="chpw" class="alt2">Сменить пароль</button><span id="dirty" hidden style="align-self:center;color:var(--red)">Есть несохранённые изменения</span></div>
 <div class="tw"><table><thead><tr><th>Ф.И.О.</th><th>Должность</th><th>Служебный</th><th>Мобильный</th><th class="ad"></th></tr></thead><tbody id="ph"></tbody></table></div>
 </div></section>
 
@@ -303,6 +374,10 @@ nav a.act{color:var(--ink)}nav a.act::after{content:"";position:absolute;left:0;
 <p class="hint">Изменения запишутся в файл data.json репозитория GitHub, и сайт обновится через 30–90 секунд. Нужен токен GitHub (Personal Access Token) с правом Contents: Read and write для репозитория nor5pasport. Токен нигде не хранится.</p>
 <label>Токен GitHub<input id="tok" type="password" autocomplete="off" placeholder="github_pat_…"></label><p class="dm"></p>
 <div class="pf"><button type="button" id="save">Сохранить на GitHub</button><button type="button" class="alt2 cl">Отмена</button></div></form></dialog>
+<dialog id="dlgR"><form method="dialog"><h3>Виджет расписания</h3>
+<p class="hint">Создайте информер на rasp.yandex.kz/informers (поезда и самолёты, город Атырау), скопируйте код и вставьте сюда целиком или только ссылку из src.</p>
+<label>Код или ссылка<textarea id="rsrc" rows="5" style="width:100%;margin-top:4px;background:var(--bg);color:var(--ink);border:1px solid var(--line);padding:10px;font:14px monospace"></textarea></label><p class="dm"></p>
+<div class="pf"><button type="button" id="rok">Применить</button><button type="button" class="alt2 cl">Закрыть</button></div></form></dialog>
 <dialog id="dlg"><form method="dialog"><h3>Сотрудник</h3>
 <label>Подразделение<select id="eg"></select></label><label>Ф.И.О.<input id="ef"></label><label>Должность<input id="er"></label>
 <label>Служебный телефон<input id="ew" placeholder="95-53-77 или 8 (7122) 95-53-77"></label><label>Мобильные (через « ; »)<input id="em" placeholder="8 701 000 00 00; 8 777 000 00 00"></label>
@@ -387,14 +462,14 @@ let sha;const g=await fetch(u,{headers:H});if(g.ok)sha=(await g.json()).sha;else
 const r=await fetch(u,{method:'PUT',headers:H,body:JSON.stringify({message:'Обновление '+path+' из админ-панели',content:btoa(unescape(encodeURIComponent(JSON.stringify(obj,null,1)))),sha})});
 if(!r.ok)throw new Error(r.status==403||r.status==404?'Нет права записи (нужен Contents: Read and write) или неверный репозиторий':'Ошибка сохранения '+r.status)}
 $('save').onclick=async()=>{const tk=$('tok').value.trim();if(!tk){msg('Вставьте токен GitHub');return}
-msg('Сохраняю…');try{await gput('data.json',D,tk);await gput('texts.json',TX,tk);if(PWCH)await gput('auth.json',CR,tk);PWCH=false;$('dirty').hidden=true;msg('Сохранено. Сайт обновится через 30–90 секунд.')}catch(x){msg(x.message||'Не удалось сохранить')}};
+msg('Сохраняю…');try{await gput('data.json',D,tk);await gput('texts.json',TX,tk);if(typeof SCHD!='undefined'&&SCHD){await gput('informer.json',{src:SCH},tk);SCHD=false}if(PWCH)await gput('auth.json',CR,tk);PWCH=false;$('dirty').hidden=true;msg('Сохранено. Сайт обновится через 30–90 секунд.')}catch(x){msg(x.message||'Не удалось сохранить')}};
 $('chpw').onclick=async()=>{const p=prompt('Новый пароль (не короче 8 символов)');if(!p)return;if(p.length<8){msg('Пароль слишком короткий');return}
 CR.h=await sha('vjdo:'+CR.l+':'+p);PWCH=true;$('dirty').hidden=false;msg('Пароль изменён. Нажмите «Сохранить сайт…».')};
 fetch('data.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(Array.isArray(j)&&j.every(g=>typeof g[0]=='string'&&Array.isArray(g[1]))){D=j;fillG('');drawP()}}).catch(()=>{});
 fetch('auth.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&j.l&&j.h)CR=j}).catch(()=>{});
 // --- правка любого текста ---
 let TX={};
-const EX='#ph,#adm,#eb,dialog,#msg,#login,#pcount,.pf,thead,script,style,select,option,input,textarea,button,.leaflet-container';
+const EX='#ph,#adm,#eb,dialog,#msg,#login,#pcount,#clk,.pf,thead,script,style,select,option,input,textarea,button,.leaflet-container';
 const clean=s=>String(s).replace(/<(?!br\s*\/?>)[^>]*>/gi,'').replace(/&nbsp;/g,' ').trim();
 const cands=()=>[...document.body.querySelectorAll('*')].filter(e=>!e.closest(EX)&&e.childNodes.length&&[...e.childNodes].every(n=>n.nodeType==3||n.nodeName=='BR')&&e.textContent.trim());
 function applyTexts(){cands().forEach(e=>{if(e._b===undefined)e._b=e.innerHTML.trim();const v=TX[e._b];if(v!==undefined&&e.innerHTML.trim()!==clean(v))e.innerHTML=clean(v)})}
@@ -430,5 +505,51 @@ function count(n){const o=n.textContent,m=o.trim().match(/^(\d+)([.,]\d+)?$/);if
 const links=[...document.querySelectorAll('nav a[href^="#"]')],so=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle('act',a.getAttribute('href')=='#'+e.target.id))}),{rootMargin:'-40% 0px -55% 0px'});
 document.querySelectorAll('section[id]').forEach(s=>so.observe(s));
 })();
+</script>
+<script>
+(function(){
+const $=id=>document.getElementById(id),rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const MN=['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь'],MG=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+const f=new Intl.DateTimeFormat('ru-RU',{timeZone:'Asia/Atyrau',hourCycle:'h23',hour:'2-digit',minute:'2-digit',second:'2-digit',year:'numeric',month:'numeric',day:'numeric',weekday:'long'});
+function T(){const p={};f.formatToParts(new Date()).forEach(x=>p[x.type]=x.value);return{h:+p.hour,m:+p.minute,s:+p.second,y:+p.year,mo:+p.month-1,d:+p.day,wd:p.weekday,ms:Date.now()%1000}}
+function face(sz,big){let t='';for(let i=0;i<12;i++){const a=i*30*Math.PI/180,r1=big?84:40,r2=i%3?(big?78:36):(big?72:33);t+=`<line x1="${100+Math.sin(a)*r1}" y1="${100-Math.cos(a)*r1}" x2="${100+Math.sin(a)*r2}" y2="${100-Math.cos(a)*r2}" stroke="${i%3?'#7e8ba3':'#ffc21a'}" stroke-width="${i%3?2:4}" stroke-linecap="round"/>`}
+if(big)t=t.replace(/r1/g,'');
+return `<svg width="${sz}" height="${sz}" viewBox="0 0 200 200"><defs><radialGradient id="g${sz}" cx="50%" cy="40%" r="70%"><stop offset="0" stop-color="#1c2b46"/><stop offset="1" stop-color="#0a111d"/></radialGradient></defs><circle cx="100" cy="100" r="96" fill="url(#g${sz})" stroke="#ffc21a" stroke-width="5"/><circle cx="100" cy="100" r="90" fill="none" stroke="#111" stroke-width="2" stroke-dasharray="10 10"/>${t}<g class="hh"><line x1="100" y1="106" x2="100" y2="${big?56:60}" stroke="#eef1f6" stroke-width="${big?8:11}" stroke-linecap="round"/></g><g class="mh"><line x1="100" y1="108" x2="100" y2="${big?34:36}" stroke="#eef1f6" stroke-width="${big?5:7}" stroke-linecap="round"/></g><g class="sh"><line x1="100" y1="118" x2="100" y2="22" stroke="#ff3b30" stroke-width="${big?2.5:4}" stroke-linecap="round"/><circle cx="100" cy="100" r="${big?6:9}" fill="#ff3b30"/></g><circle cx="100" cy="100" r="3" fill="#111"/></svg>`}
+$('cmini').innerHTML=face(30,false);$('cbig').innerHTML=face(170,true);
+const hands=[...document.querySelectorAll('#cmini svg,#cbig svg')].map(s=>[s.querySelector('.hh'),s.querySelector('.mh'),s.querySelector('.sh')]);
+const pad=n=>String(n).padStart(2,'0');let open=false,last=-1,vy,vm;
+function tick(){const t=T();
+const sa=(t.s+(rm||!open?0:t.ms/1000))*6,ma=(t.m+t.s/60)*6,ha=(t.h%12+t.m/60)*30;
+hands.forEach(([a,b,c])=>{a.setAttribute('transform',`rotate(${ha} 100 100)`);b.setAttribute('transform',`rotate(${ma} 100 100)`);c.setAttribute('transform',`rotate(${sa} 100 100)`)});
+if(t.s!==last){last=t.s;const s=`${pad(t.h)}:${pad(t.m)}:${pad(t.s)}`;$('cdig').textContent=s;$('cdg2').textContent=s;
+const w=t.wd.charAt(0).toUpperCase()+t.wd.slice(1);$('cdate').textContent=`${w}, ${t.d} ${MG[t.mo]} ${t.y}`;
+if(vy===undefined){vy=t.y;vm=t.mo;cal()}else if(open)cal()}
+requestAnimationFrame(tick)}
+function cal(){const t=T();$('cmon').textContent=MN[vm]+' '+vy;
+const first=(new Date(vy,vm,1).getDay()+6)%7,dim=new Date(vy,vm+1,0).getDate(),pd=new Date(vy,vm,0).getDate();let o='';
+for(let i=0;i<42;i++){let d=i-first+1,cls='',n;
+if(d<1){n=pd+d;cls='o'}else if(d>dim){n=d-dim;cls='o'}else{n=d;if(t.y==vy&&t.mo==vm&&t.d==d)cls='td'}
+if(i%7>4)cls+=' we';o+=`<span class="${cls}">${n}</span>`}
+$('cgrid').innerHTML=o}
+function setOpen(v){open=v;$('cpan').classList.toggle('open',v);$('ccal').setAttribute('aria-expanded',v);if(v){const t=T();vy=t.y;vm=t.mo;cal()}}
+$('ccal').onclick=e=>{e.stopPropagation();setOpen(!open)};
+document.addEventListener('click',e=>{if(open&&!e.target.closest('#cpan'))setOpen(false)});
+document.addEventListener('keydown',e=>{if(e.key=='Escape')setOpen(false)});
+$('cprev').onclick=()=>{vm--;if(vm<0){vm=11;vy--}cal()};$('cnext').onclick=()=>{vm++;if(vm>11){vm=0;vy++}cal()};
+$('ctod').onclick=()=>{const t=T();vy=t.y;vm=t.mo;cal()};
+tick();
+})();
+</script>
+<script>
+let SCH=null,SCHD=false;
+document.getElementById('schb').onclick=()=>{const f=document.getElementById('schf');document.getElementById('rsrc').value=f.src;openD('dlgR')};
+document.getElementById('rok').onclick=()=>{const v=document.getElementById('rsrc').value,m=v.match(/src\s*=\s*["']([^"']+)["']/),s=(m?m[1]:v).trim().replace(/&amp;/g,'&');
+if(!/^https:\/\/rasp\.yandex\.(kz|ru|com|by|ua|uz)\//.test(s)){msg('Нужна ссылка вида https://rasp.yandex.kz/informers/…');return}
+document.getElementById('schf').src=s;SCH=s;SCHD=true;document.getElementById('dirty').hidden=false;document.getElementById('dlgR').close();msg('Виджет обновлён. Нажмите «Сохранить сайт…».')};
+fetch('informer.json?'+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():null).then(j=>{if(j&&/^https:\/\/rasp\.yandex\./.test(j.src||''))document.getElementById('schf').src=j.src}).catch(()=>{});
+</script>
+<script>
+(function(){const b=document.querySelectorAll('.stabs button');
+b.forEach(x=>x.onclick=()=>{b.forEach(y=>y.classList.toggle('on',y==x));['train','plane'].forEach(t=>{const f=document.getElementById(t=='train'?'schf':'fplane'),on=t==x.dataset.t;f.hidden=!on;if(on&&!f.getAttribute('src'))f.setAttribute('src',f.dataset.src)})})})();
 </script>
 </body></html>
